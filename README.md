@@ -4,6 +4,10 @@ This project is inspired of [postgrest-auth](https://www.npmjs.com/package/postg
 
 The goal of this project is to provide the whole authentication features for a postgrest-prowered API. It must be deployed alongside your API and share the same jwt secret with your postgrest instance.
 
+## Changes to original alexandrevilain/postgrest-auth
+
+Added column usergroup to database. Api returns usergroup in json representation of the user. Can be used in for example UIs that change according to user group.
+
 ## Installation
 
 Using docker:
