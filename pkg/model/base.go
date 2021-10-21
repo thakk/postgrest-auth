@@ -6,7 +6,7 @@ import (
 	"html/template"
 
 	"github.com/labstack/gommon/log"
-	"github.com/alexandrevilain/postgrest-auth/pkg/config"
+	"github.com/thakk/postgrest-auth/pkg/config"
 )
 
 // EnsureDBElementsExists ensure that required tables/roles/schemas, exists on the database
@@ -19,7 +19,8 @@ func EnsureDBElementsExists(db *sql.DB, config *config.DB, logger *log.Logger) e
 		password text NOT NULL,
 		confirmed boolean NOT NULL DEFAULT FALSE,
 		confirmToken uuid DEFAULT NULL,
-		resetPasswordToken text DEFAULT NULL
+		resetPasswordToken text DEFAULT NULL,
+        userGroup text DEFAULT NULL
 	);
 	DO
 	$body$

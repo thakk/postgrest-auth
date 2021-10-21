@@ -1,7 +1,7 @@
 package mail
 
 import (
-	"github.com/alexandrevilain/postgrest-auth/pkg/config"
+	"github.com/thakk/postgrest-auth/pkg/config"
 	gomail "gopkg.in/gomail.v2"
 )
 

@@ -11,7 +11,8 @@ COPY Gopkg.toml Gopkg.lock ./
 RUN dep ensure -vendor-only
 
 COPY . ./
-RUN go build -o postgrest-auth cmd/postgrest-auth/main.go
+RUN go env -w GO111MODULE=off && \
+    go build -o postgrest-auth cmd/postgrest-auth/main.go
 
 FROM alpine
 WORKDIR /root

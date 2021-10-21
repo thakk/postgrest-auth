@@ -20,23 +20,24 @@ type User struct {
 	Confirmed          bool
 	ConfirmToken       sql.NullString
 	ResetPasswordToken sql.NullString
+    UserGroup          sql.NullString
 }
 
 // FindByEmail allows us to find a user by its email (used for authentication)
 func (u *User) FindByEmail(db *sql.DB) error {
-	return db.QueryRow("SELECT id, password, confirmed, confirmToken, resetPasswordToken FROM auth.users WHERE email = $1", u.Email).Scan(&u.ID, &u.Password, &u.Confirmed, &u.ConfirmToken, &u.ResetPasswordToken)
+	return db.QueryRow("SELECT id, password, confirmed, confirmToken, resetPasswordToken, userGroup FROM auth.users WHERE email = $1", u.Email).Scan(&u.ID, &u.Password, &u.Confirmed, &u.ConfirmToken, &u.ResetPasswordToken, &u.UserGroup)
 }
 
 // FindByID allows us to find a user by its id (used for authentication)
 func (u *User) FindByID(db *sql.DB) error {
-	return db.QueryRow("SELECT email, password, confirmed, confirmToken, resetPasswordToken FROM auth.users WHERE id = $1", u.ID).Scan(&u.Email, &u.Password, &u.Confirmed, &u.ConfirmToken, &u.ResetPasswordToken)
+	return db.QueryRow("SELECT email, password, confirmed, confirmToken, resetPasswordToken, userGroup FROM auth.users WHERE id = $1", u.ID).Scan(&u.Email, &u.Password, &u.Confirmed, &u.ConfirmToken, &u.ResetPasswordToken, &u.UserGroup)
 }
 
 // Create allow us to create new user in database
 func (u *User) Create(db *sql.DB) error {
 	u.ID = uuid.NewV4().String()
 	u.ConfirmToken = sql.NullString{String: uuid.NewV4().String(), Valid: true}
-	return db.QueryRow("INSERT INTO auth.users(id, email, password, confirmToken) VALUES($1, $2, $3, $4) RETURNING id", u.ID, u.Email, u.Password, u.ConfirmToken).Scan(&u.ID)
+	return db.QueryRow("INSERT INTO auth.users(id, email, password, confirmToken, userGroup) VALUES($1, $2, $3, $4, $5) RETURNING id", u.ID, u.Email, u.Password, u.ConfirmToken,u.UserGroup).Scan(&u.ID)
 }
 
 // GeneratePassword generate random password
@@ -147,5 +148,6 @@ func (u *User) GetMapRepresentation() map[string]interface{} {
 	return map[string]interface{}{
 		"id":    u.ID,
 		"email": u.Email,
+        "userGroup": u.UserGroup,
 	}
 }

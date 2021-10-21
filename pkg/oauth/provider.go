@@ -1,7 +1,7 @@
 package oauth
 
 import (
-	"github.com/alexandrevilain/postgrest-auth/pkg/model"
+	"github.com/thakk/postgrest-auth/pkg/model"
 )
 
 // Oauth2Payload is payload struct to retrive from provider login
