@@ -20,7 +20,7 @@ type User struct {
 	Confirmed          bool
 	ConfirmToken       sql.NullString
 	ResetPasswordToken sql.NullString
-    UserGroup          sql.NullString
+    UserGroup          string `json:"usergroup"`
 }
 
 // FindByEmail allows us to find a user by its email (used for authentication)
@@ -148,6 +148,6 @@ func (u *User) GetMapRepresentation() map[string]interface{} {
 	return map[string]interface{}{
 		"id":    u.ID,
 		"email": u.Email,
-        "userGroup": u.UserGroup,
+        "usergroup": u.UserGroup,
 	}
 }
